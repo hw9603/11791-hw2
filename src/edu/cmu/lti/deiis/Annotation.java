@@ -27,4 +27,20 @@ public class Annotation {
     public String toString() {
         return "[" + begin + "," + end + " " + type + "]";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Annotation)) {
+            return false;
+        }
+        Annotation annotation = (Annotation) o;
+        if (annotation.getType().equals(type) && annotation.getEnd() == end && annotation.getBegin() == begin) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

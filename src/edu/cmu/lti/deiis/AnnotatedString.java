@@ -1,5 +1,7 @@
 package edu.cmu.lti.deiis;
 
+import java.util.List;
+
 public class AnnotatedString {
     String text;
     AnnotationIndex index;
@@ -25,13 +27,25 @@ public class AnnotatedString {
         this.index = index;
     }
 
-    public boolean exactMatchCompare(AnnotatedString annotatedString) {
-
-        return false;
+    public boolean exactMatchCompare(AnnotatedString targetString) {
+        AnnotationIndex targetIndex = targetString.getIndex();
+        List<Annotation> targetAnnotations = targetIndex.getAnnotations();
+        for (Annotation a : index.getAnnotations()) {
+            if (!targetAnnotations.contains(a)) return false;
+        }
+        return true;
     }
 
-    public double softMatchCompare(AnnotatedString annotatedString) {
-        return 0;
+    public double softMatchCompare(AnnotatedString targetString) {
+        AnnotationIndex targetIndex = targetString.getIndex();
+        List<Annotation> targetAnnotations = targetIndex.getAnnotations();
+        int found = 0;
+        for (Annotation a : index.getAnnotations()) {
+            if (targetAnnotations.contains(a)) {
+                found++;
+            }
+        }
+        return found / (double) index.getAnnotations().size();
     }
 
 
